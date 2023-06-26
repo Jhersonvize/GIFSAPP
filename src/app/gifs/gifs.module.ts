@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
 import { HomePageComponent } from './pages/home/home-page.component';
+import { CardComponent } from './components/card/card.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -10,10 +12,12 @@ import { HomePageComponent } from './pages/home/home-page.component';
   declarations: [
     BusquedaComponent,
     ResultadosComponent,
-    HomePageComponent
+    HomePageComponent,
+    CardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     HomePageComponent,

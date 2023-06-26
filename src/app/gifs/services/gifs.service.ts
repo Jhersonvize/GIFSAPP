@@ -11,10 +11,25 @@ export class GifsService {
   private apiKey: string = 'djHo0Uh7X8si3S1W6W9LcmngkAhbmxQ8';
   private serviceUrl: string = 'https://api.giphy.com/v1/gifs';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.loadLocalStorage();
+
+  }
 
   get historial() {
     return [...this._historial];
+  }
+  private saveLocalStorage():void {
+    localStorage.setItem('history', JSON.stringify(this._historial));
+  }
+
+  private loadLocalStorage():void {
+    if(!localStorage.getItem('history')) return;
+
+    this._historial = JSON.parse(localStorage.getItem('history')!);
+    if(this._historial.length===0) return;
+    this.buscarGifs(this._historial[0]);
+
   }
 
   buscarGifs(query: string): void {
@@ -23,6 +38,7 @@ export class GifsService {
       this._historial.unshift(query);
       this._historial = this._historial.splice(0, 10);
     }
+    this.saveLocalStorage();
     const params = new HttpParams()
       .set('api_key', this.apiKey)
       .set('limit', '10')
